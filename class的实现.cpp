@@ -144,3 +144,35 @@ String String::SubStr(const int& id, const int & num)const
 	
 	return w;
 }
+//指定位置的插入函数
+String & String::Insert(int id, const String&s)
+{
+	char *p, *p1, *buf;
+	int len = size;//原串的长度
+	int len1 = s.size;//新串的长度
+	int left = len - id;			//需要移动的数字的长度
+	int i;
+	//检验
+	if (id<0 || id>s.size)
+		Error("Insert overlow");
+	buf = str;//保存原串的字符串
+	/*在这里难道可以不delete  而直接创建吗*/
+	str = new char[len + len1 + 1];
+	if (str == NULL)
+		Error("overlow");
+	strcpy(str, buf);//把原串直接放在了新的str里面
+	delete []buf;
+	//步骤2
+	p = str + len;
+	p1 = p + len;
+	for (i = 1; i < left + 1; ++i)
+	{
+		*p1-- = *p--;		//这一句要看清楚
+	}
+	p = str + id;		//指向原串插入的位置
+	p1 = s.str;
+	while (*p1 != '\0')//从p1开始表示结束
+		*p++ = *p1++;
+	size = len + len1;
+	return *this;
+}
