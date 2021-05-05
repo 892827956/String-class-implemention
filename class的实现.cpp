@@ -118,3 +118,29 @@ bool operator == (const String & s, const char * c)
 {
 	return (strcmp(c, s.str) == 0);
 }
+
+String String::SubStr(const int& id, const int & num)const
+{
+	//先进行判断  
+	int len = size;
+	int left = len - id,i;
+	if (id < 0 || id>len - 1)
+		Error("id is illegal");
+	if (num<0 || num>left)
+		Error("num is illegal");
+	//步骤1
+	String w;
+	delete []w.str;
+	w.str = new char[num + 1];
+	if (w.str == NULL)
+		Error("Substr overlow");
+	w.size = num;//
+	//步骤2
+	char * p = str + id;//指针的运算
+	char * p1 = w.str;//暂时是指向新串的起点
+	for (int i = 0; i < num; i++)//执行的次数
+		*p1++ = *p++;//这个优先级要搞清楚
+	*p1 = '\0';//自动填充到/0
+	
+	return w;
+}
