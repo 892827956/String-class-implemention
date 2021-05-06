@@ -176,3 +176,40 @@ String & String::Insert(int id, const String&s)
 	size = len + len1;
 	return *this;
 }
+//重写一遍插入函数    这个自己写的不知道正确与否  等都写完了之后再来全部改正
+/*String & String::Insert(int id, const String & s)
+{
+	char *p, *p1 ,*buf;//p和p1是工作指针
+	int len = size;
+	int len1 = s.size;
+	int left = size - id;//需要移动的数组的长度
+	//开始判断这个id是否正常
+	if (id<0 || id>size)
+		Error("id : Overlow");
+	buf = str;
+	str = new char[len + len1 + 1];
+	if (str == NULL)
+		Error("str : Overlow");
+	strcpy(str, buf);//对这个新的数组进行一个赋值
+	delete []buf;
+	//开始移动这个数组
+	int i = 0;//用于次数的排序
+	p = str + len;
+	p1 = p + len1;
+	for (int i = 0; i < left; i++)
+	{
+		*p1 = *p;
+		p--;
+		p1--;
+	}
+	p1 = s.str;
+	for (i = 0; i < len1; i++)
+	{
+		*p = *p1;
+		p++;
+		p1++;
+	}
+
+	size = len + len1;
+	return *this;
+}*/
