@@ -213,3 +213,33 @@ String & String::Insert(int id, const String&s)
 	size = len + len1;
 	return *this;
 }*/
+/*子串函数删除的原理是先将整个字符数组分成三段，即前中后，用后段覆盖中段，并且在
+完成覆盖之后手动阻止（添加\0），于是在重新创建一个动态数组，于是，再相互COPY过去就好了*/
+//子串删除函数
+String& String::Erase(int id, int num)
+{
+	char *p, *q, *buf;
+	int len = size;
+	int left = len - id;
+	if (id<0 || id>len - 1)
+		Error("id is illegal");
+	if (num <= 0 || num > left)
+		Error("num is illegal");
+	//步骤一
+	p = str + id;
+	q = str + id + num;
+	while (*q != '\0')
+		* p++ = *q++;		//用后段来覆盖掉中段
+	*p = '\0';//用‘\0’手动封装
+	//步骤二
+	buf = str;
+	//步骤三
+	len = strlen(buf);
+	str = new char[len + 1];
+	if (str == NULL)
+		Error("overlow");
+	strcpy(str, buf);
+	size = len;
+	delete[]buf;
+	return *this;
+}
