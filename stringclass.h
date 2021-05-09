@@ -28,7 +28,7 @@ public:
 	friend String operator+(const char * c, const String & s);//设置为友元函数  其实是一个普通函数
 	bool operator == (const String & s)const;//串的比较：类串===类串
 	bool operator == (const char * c)const;//串的比较：类串 == C串
-	friend bool operator == (const String & s, const char * c)const;// 串的比较：C串 == 类串
+	friend bool operator == (const String & s, const char * c);// 串的比较：C串 == 类串
 	operator char*()const;//成员转换
 	char& operator[](int id);//下标运算符
 	const char & operator[](int id) const;//常量型下标运算符
