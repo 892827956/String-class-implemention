@@ -243,3 +243,101 @@ String& String::Erase(int id, int num)
 	delete[]buf;
 	return *this;
 }
+
+//下表运算符重载
+char & String::operator[](int id)
+{
+	if (id<0 || id>size)
+		Error("id : overlow");
+	return *(str + id);
+}
+const char & String::operator[](int id)const
+{
+	if (id<0 || id>size)
+		Error("id : overlow");
+	return *(str + id);
+}
+//字符查找函数
+int String::Find_First_Of(char ch, int id)const//清楚这个后置const的意义  就是在这个函数里面我不会改变函数的值
+{
+	int i = id;
+	char * p;
+	if (id<0 || id>size - 1)
+		Error("id : overlow");
+	p = str + id;
+//第一种查找方法：
+	while (*p = '\0')
+	{
+		if (*p == ch)
+			break;
+		else
+		{
+			++i;
+			p++;				//不等于的话  就要都加了  不仅下表即  指针必然也要加
+		}
+	}
+	return *p == '\0' ? -1 : i;			//这种判断其实也是很常见的  可以一下子减少好几行 何乐而不为
+	//第二种查找方法
+/*	while (*p == ch||*p =='\0') 
+	{
+		i++;
+		p++
+	}
+	return *p == '\0' ? -1 : i;
+	*/
+}
+int String::Find_First_Of(const String& s, int id)const
+{
+	int i = id;
+	char * p;
+	if (id<0 || id>size - 1)
+		Error("id : overlow");
+	p = str + id;
+	//第一种查找方法：
+	while (*p = '\0')
+	{
+		if (*p == ch)
+			break;
+		else
+		{
+			++i;
+			p++;				//不等于的话  就要都加了  不仅下表即  指针必然也要加
+		}
+	}
+	return *p == '\0' ? -1 : i;			//这种判断其实也是很常见的  可以一下子减少好几行 何乐而不为
+	//第二种查找方法
+/*	while (*p == ch||*p =='\0')
+	{
+		i++;
+		p++
+	}
+	return *p == '\0' ? -1 : i;
+	*/
+}
+//关于输入和输出函数
+istream & operator<<(istream & input, String & s)
+{
+	char buf[256];//作为一个缓冲区
+	input >> buf;
+	s = buf;//运用COPY构造函数
+	return input;
+}
+
+ostream & operator>>(ostream & output, String & s)
+{
+	output << s.str;
+	return output;
+}
+
+//读取含空格的字符串的函数
+int String::ReadString(istream&input, char delimiter)
+{
+	char buf[256];
+	int token = -1;
+	if (input.getline(buf, 256, delimiter))
+	{
+		*this = buf;
+		token = size;
+	}
+	return token;
+}
